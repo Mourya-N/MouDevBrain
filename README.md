@@ -18,9 +18,9 @@
 | Component | Technology |
 | :--- | :--- |
 | **Frontend** | React 18, Tailwind CSS, Vite, React Flow |
-| **Backend** | Spring Boot 3, Spring Security, JWT, MongoDB Atlas |
+| **Backend** | Spring Boot 3, Spring Security, JWT |
 | **AI Engine** | Python 3.11, FastAPI, LangChain, groqAI, FAISS Vector DB |
-| **Tooling** | Docker, Docker Compose, Maven, Lucide Icons |
+| **Tooling** | Docker, Docker Compose, Maven |
 
 ---
 
