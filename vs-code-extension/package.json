@@ -1,0 +1,42 @@
+{
+    "name": "moucodebrain-vscode",
+    "displayName": "MouCodeBrain",
+    "description": "Chat with your codebase directly from VS Code",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "moucodebrain.ask",
+                "title": "Ask MouCodeBrain"
+            }
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "command": "moucodebrain.ask",
+                    "group": "navigation"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.80.0",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "axios": "^1.6.0"
+    }
+}

@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: moucodebrain-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: moucodebrain
+    volumes:
+      - mongodb_data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: moucodebrain-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://admin:password123@mongodb:27017/moucodebrain?authSource=admin
+      JWT_SECRET: your-super-secret-jwt-key-that-is-at-least-32-characters-long
+      AI_ENGINE_URL: http://ai-engine:8000
+    depends_on:
+      - mongodb
+
+  ai-engine:
+    build: ./ai-engine
+    container_name: moucodebrain-ai
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      MONGODB_URI: mongodb://admin:password123@mongodb:27017/moucodebrain?authSource=admin
+    depends_on:
+      - mongodb
+    volumes:
+      - ./ai-engine:/app
+      - vector_data:/app/data
+
+  frontend:
+    build: ./frontend
+    container_name: moucodebrain-frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: http://localhost:8080
+      VITE_AI_URL: http://localhost:8000
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  mongodb_data:
+  vector_data:
